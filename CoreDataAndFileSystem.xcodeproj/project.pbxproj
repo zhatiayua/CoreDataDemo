@@ -15,6 +15,8 @@
 		4A0225A020AB6FFC006CAB59 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A02259E20AB6FFC006CAB59 /* LaunchScreen.storyboard */; };
 		4A0225AB20AB6FFD006CAB59 /* coreDataAndFileSystemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0225AA20AB6FFD006CAB59 /* coreDataAndFileSystemTests.swift */; };
 		4A0225B620AB6FFD006CAB59 /* coreDataAndFileSystemUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0225B520AB6FFD006CAB59 /* coreDataAndFileSystemUITests.swift */; };
+		4A0225C420AB71DA006CAB59 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0225C320AB71DA006CAB59 /* CoreDataManager.swift */; };
+		4A0225C620AB75C7006CAB59 /* FileSystemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0225C520AB75C7006CAB59 /* FileSystemManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +51,8 @@
 		4A0225B120AB6FFD006CAB59 /* coreDataAndFileSystemUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = coreDataAndFileSystemUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A0225B520AB6FFD006CAB59 /* coreDataAndFileSystemUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = coreDataAndFileSystemUITests.swift; sourceTree = "<group>"; };
 		4A0225B720AB6FFD006CAB59 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4A0225C320AB71DA006CAB59 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		4A0225C520AB75C7006CAB59 /* FileSystemManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSystemManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +110,8 @@
 				4A02259E20AB6FFC006CAB59 /* LaunchScreen.storyboard */,
 				4A0225A120AB6FFC006CAB59 /* Info.plist */,
 				4A02259920AB6FFA006CAB59 /* coreDataAndFileSystem.xcdatamodeld */,
+				4A0225C320AB71DA006CAB59 /* CoreDataManager.swift */,
+				4A0225C520AB75C7006CAB59 /* FileSystemManager.swift */,
 			);
 			path = coreDataAndFileSystem;
 			sourceTree = "<group>";
@@ -207,7 +213,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 4A02258A20AB6FFA006CAB59 /* Build configuration list for PBXProject "coreDataAndFileSystem" */;
+			buildConfigurationList = 4A02258A20AB6FFA006CAB59 /* Build configuration list for PBXProject "CoreDataAndFileSystem" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -259,8 +265,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A0225C620AB75C7006CAB59 /* FileSystemManager.swift in Sources */,
 				4A02259520AB6FFA006CAB59 /* ViewController.swift in Sources */,
 				4A02259B20AB6FFA006CAB59 /* coreDataAndFileSystem.xcdatamodeld in Sources */,
+				4A0225C420AB71DA006CAB59 /* CoreDataManager.swift in Sources */,
 				4A02259320AB6FFA006CAB59 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -483,7 +491,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/coreDataAndFileSystem.app/coreDataAndFileSystem";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CoreDataAndFileSystem.temp_caseinsensitive_rename.app/CoreDataAndFileSystem.temp_caseinsensitive_rename";
 			};
 			name = Debug;
 		};
@@ -504,7 +512,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/coreDataAndFileSystem.app/coreDataAndFileSystem";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CoreDataAndFileSystem.temp_caseinsensitive_rename.app/CoreDataAndFileSystem.temp_caseinsensitive_rename";
 			};
 			name = Release;
 		};
@@ -551,7 +559,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		4A02258A20AB6FFA006CAB59 /* Build configuration list for PBXProject "coreDataAndFileSystem" */ = {
+		4A02258A20AB6FFA006CAB59 /* Build configuration list for PBXProject "CoreDataAndFileSystem" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4A0225B820AB6FFD006CAB59 /* Debug */,
