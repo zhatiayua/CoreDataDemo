@@ -8,9 +8,10 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class Page2: UIViewController {
     
     let coreDataManager: CoreDataManager = CoreDataManager.coreDataManager
+    var passedInfo: Job!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,24 +27,29 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var nameText: UITextField!
     
-    @IBOutlet weak var ageText: UITextField!
+    @IBOutlet weak var idText: UITextField!
     
     @IBAction func saveButton(_ sender: Any) {
-        coreDataManager.saveData(name: nameText.text!, age: ageText.text!)
+        coreDataManager.saveData(job: passedInfo, name: nameText.text!, id: idText.text!, jobid: passedInfo.id!)
         nameText.text = ""
-        ageText.text = ""
+        idText.text = ""
     }
     
     @IBAction func readButton(_ sender: Any) {
-        let person: Person = coreDataManager.retrieveData(name: nameText.text!)
-        ageText.text = person.age
-        imageView.image = coreDataManager.fileSystemManager.getImage(person: person)
-        
+        let task = coreDataManager.retrieveTask(job: passedInfo, id: idText.text!)
+        if task == nil {
+            idText.text = "not exist"
+            imageView.image = nil
+        }
+        else {
+            nameText.text = task?.name!
+            imageView.image = coreDataManager.fileSystemManager.getImage(task: task!)
+        }
     }
     
     @IBAction func deletAllButton(_ sender: Any) {
         imageView.image = nil
-        coreDataManager.deleteAllPerson()
+        coreDataManager.deleteAllTasks(job: passedInfo)
     }
     
     @IBOutlet weak var imageView: UIImageView!

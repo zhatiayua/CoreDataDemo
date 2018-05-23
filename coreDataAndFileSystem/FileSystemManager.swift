@@ -47,20 +47,20 @@ class FileSystemManager{
         createFolder(type: "Audios")
     }
     
-    func saveImage(person: Person, image: UIImage, quality: CGFloat, nameWithExtension: String){
+    func saveImage(task: Task, image: UIImage, quality: CGFloat, nameWithExtension: String){
         if let imageRep = UIImageJPEGRepresentation(image, quality) as NSData?{
             let imageURLString = filePath + "Images/\(nameWithExtension)"
             imageRep.write(toFile: imageURLString, atomically: true)
-            person.photo = "Images/\(nameWithExtension)"
+            task.photo = "Images/\(nameWithExtension)"
             print("Image is saved!")
             print(imageURLString)
         }
     }
     
-    func getImage(person: Person) -> (UIImage){
+    func getImage(task: Task) -> (UIImage){
         print("Image url: ")
-        print(person.photo!)
-        let image = UIImage(contentsOfFile: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String + "/" + person.photo!)
+        print(task.photo!)
+        let image = UIImage(contentsOfFile: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String + "/" + task.photo!)
         return image!
     }
     
@@ -72,33 +72,54 @@ class FileSystemManager{
         catch let error as NSError{
             print("error")
             print(error.localizedDescription)
-            fatalError(NSError.debugDescription())
         }
     }
     
-    func saveVideo(person: Person, videoFromURLString: String, nameWithExtension: String){
+    func saveVideo(task: Task, videoFromURLString: String, nameWithExtension: String){
         if let urlData = NSData(contentsOfFile: videoFromURLString){
             let videoURLString = filePath + "Videos/\(nameWithExtension)"
             urlData.write(toFile: videoURLString, atomically: true)
-            person.video = "Videos/\(nameWithExtension)"
+            task.video = "Videos/\(nameWithExtension)"
             print("Video is saved!")
         }
     }
     
-    func getVideo(person: Person) -> (URL){
-        return URL(string: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String + "/Videos/\(person.video!)")!
+    func getVideo(task: Task) -> (URL){
+        return URL(string: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String + "/Videos/\(task.video!)")!
     }
     
-    func saveAudio(person: Person, audioFromURLString: String, nameWithExtension: String){
+    func deletVideo(URLString: String){
+        do{
+            try fileManager.removeItem(atPath: URLString)
+            print("Video is removed!")
+        }
+        catch let error as NSError{
+            print("error")
+            print(error.localizedDescription)
+        }
+    }
+    
+    func saveAudio(task: Task, audioFromURLString: String, nameWithExtension: String){
         if let urlData = NSData(contentsOfFile: audioFromURLString){
             let audioURLString = filePath + "Audios/\(nameWithExtension)"
             urlData.write(toFile: audioURLString, atomically: true)
-            person.audio = "Audios/\(nameWithExtension)"
+            task.audio = "Audios/\(nameWithExtension)"
             print("Audio is saved!")
         }
     }
     
-    func getAudio(person: Person) -> (URL){
-        return URL(string: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String + "/Audios/\(person.audio!)")!
+    func getAudio(task: Task) -> (URL){
+        return URL(string: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String + "/Audios/\(task.audio!)")!
+    }
+    
+    func deletAudio(URLString: String){
+        do{
+            try fileManager.removeItem(atPath: URLString)
+            print("Audio is removed!")
+        }
+        catch let error as NSError{
+            print("error")
+            print(error.localizedDescription)
+        }
     }
 }

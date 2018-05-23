@@ -20,26 +20,61 @@ class CoreDataManager: NSObject{
     
     let fileSystemManager: FileSystemManager = FileSystemManager.fileSystemManager
     
-    func retrieveData(name: String)->(Person){
-        let fetchRequest: NSFetchRequest = Person.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "name == %@", name)
+    func saveJob(id: String, name: String){
+        let job = Job(context: context)
+        job.id = id
+        job.name = name
+        do {
+            try context.save()
+            print("Job is Saved!")
+        }
+        catch {
+            fatalError()
+        }
+    }
+    
+    func retrieveJob(id: String) -> (Job?){
+        let fetchRequest: NSFetchRequest = Job.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id == %@", id)
         do{
-            let results: [Person] = try context.fetch(fetchRequest)
-            return results[0]
+            let results: [Job] = try context.fetch(fetchRequest)
+            if results.count == 0 {
+                return nil
+            }
+            else {
+                return results[0]
+            }
         }
         catch{
             fatalError("Retrieve failed")
         }
     }
     
-    func saveData(name: String, age: String){
-        let person = NSEntityDescription.insertNewObject(forEntityName: "Person", into: context)as! Person
-        person.name = name
-        person.age = age
-        
-        fileSystemManager.saveImage(person: person, image: UIImage(contentsOfFile: "/Users/TianyuanZhang/Desktop/imageDemo.jpg")!, quality: 1.0, nameWithExtension: "\(person.name!).jpg")
-        
-        fileSystemManager.saveVideo(person: person, videoFromURLString: "/Users/TianyuanZhang/Downloads/Wildlife.mp4", nameWithExtension: "\(person.name!).mp4")
+    func getAllJobs() -> [Job] {
+        let fetchRequest: NSFetchRequest = Job.fetchRequest()
+        do {
+            let result = try context.fetch(fetchRequest)
+            return result            }
+        catch {
+            fatalError();
+        }
+    }
+    
+    func deletAllJobs(){
+        for job in getAllJobs() {
+            deleteAllTasks(job: job)
+            context.delete(job)
+        }
+    }
+    
+    func saveData(job: Job, name: String, id: String, jobid: String){
+        let task = Task(context: context)
+        task.name = name
+        task.id = id
+        task.jobid = jobid
+        fileSystemManager.saveImage(task: task, image: UIImage(contentsOfFile: "/Users/TianyuanZhang/Desktop/imageDemo.jpg")!, quality: 1.0, nameWithExtension: "\(task.jobid! + task.id!).jpg")
+        fileSystemManager.saveVideo(task: task, videoFromURLString: "/Users/TianyuanZhang/Downloads/Wildlife.mp4", nameWithExtension: "\(task.jobid! + task.id!).mp4")
+        job.addToHas(task)
         do{
             try context.save()
             print("Data Saved!")
@@ -49,22 +84,51 @@ class CoreDataManager: NSObject{
         }
     }
     
-    func getAllPerson() -> [Person] {
-        let fetchRequest: NSFetchRequest = Person.fetchRequest()
-        do {
-            let result = try context.fetch(fetchRequest)
-            return result
-        } catch {
-            fatalError();
+    func retrieveTask(job: Job, id: String)->(Task?){
+//        let fetchRequest: NSFetchRequest = Task.fetchRequest()
+//        fetchRequest.predicate = NSPredicate(format: "name == %@", name)
+//        do{
+//            let results: [Task] = try context.fetch(fetchRequest)
+//            if results.count == 0 {
+//                return nil
+//            }
+//            else {
+//                return results[0]
+//            }
+//        }
+//        catch{
+//            fatalError("Retrieve failed")
+//        }
+        for task in job.has as! Set<Task>{
+            print("..........\(task.id!)..........")
+            print("............\(id)...........")
+            if task.id! == id{
+                return task
+            }
         }
+        return nil
     }
     
-    func deleteAllPerson(){
-        for person in getAllPerson(){
-            let photoURLString = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String + "/" + person.photo!
-            print(NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String + "/" + person.photo!)
-            context.delete(person)
+    func getAllTask(job: Job) -> Set<Task> {
+//        let fetchRequest: NSFetchRequest = Task.fetchRequest()
+//        do {
+//            let result = try context.fetch(fetchRequest)
+//            return result
+//        } catch {
+//            fatalError();
+//        }
+        return job.has as! Set<Task>
+    }
+    
+    func deleteAllTasks(job: Job){
+        for task in getAllTask(job: job){
+            let documentURLString = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
+            let photoURLString = documentURLString + "/" + task.photo!
+            let videoURLString = documentURLString + "/" + task.video!
+            print(documentURLString)
+            context.delete(task)
             fileSystemManager.deletImage(URLString: photoURLString)
+            fileSystemManager.deletVideo(URLString: videoURLString)
         }
         do{
             try context.save()
